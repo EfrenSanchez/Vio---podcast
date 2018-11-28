@@ -1,7 +1,7 @@
 {
   "name": "next",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
     "dev": "node server.js",
     "start": "NODE_ENV=production node server.js",
