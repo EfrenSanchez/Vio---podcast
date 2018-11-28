@@ -1,6 +1,6 @@
-import React from'react'
-import Link from 'next/link'
+import React from 'react'
 import Layout from '../components/Layout'
+import Link from 'next/link'
 
 export default class Error extends React.Component {
   static getInitialProps({ res, err }) {
@@ -10,50 +10,47 @@ export default class Error extends React.Component {
 
   render() {
     const { statusCode } = this.props
-
     return (
-      <Layout title="Oh no :(">
+      <Layout title="Oh no! :(">
         { statusCode === 404 ?
-          <div className="noExist">
-            <button><Link href="/"><a>&lt; Volver</a></Link></button>
-          </div>
-          :
-          <div className="problem">
-            <h1>Hubo un problema :(</h1>
-            <p>Intenta nuevamente en unos segundos</p>
-          </div>
+            <div className="message">
+              <h1>Ops! Esta página no existe</h1>
+              <p>Aqui no hay ni polvo. Que tal si regresas a la página principal
+                  a buscar algo de tu interés ;)</p>
+              <Link href={`/`} >
+                <a className="enlace">
+                  <button>Muéstrame esos Podcast!</button>
+                </a>
+              </Link>
+            </div>
+            :
+            <div className="message">
+              <h1> Algo salió mal :S</h1>
+              <p>Intenta nuevamente en unos segundos.</p>
+            </div>
          }
-         <style jsx>{`
-          .noExist {
-            height: 90vh;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-image: url(static/images/error.png);
-            background-size: cover;
+        <style jsx>{`
+          .message {
+            padding: 100px 30px;
           }
-          button{
-            color: #CEE9EC;
-            background-color: #66A1B1;
-            height: 50px;
-            width: auto;
-            position: absolute;
-            top: 44%;
-            left: 49%;
-            border-radius: 10%;
-            border-bottom-color: #315571;
-            border-top: none;
-            border-left: none;
-            border-right: none;
+          p {
+            color: black;
+            margin: auto;
           }
-          button:hover{
-            opacity: 0.8;
+          a.enlace {
+            text-decoration: none;
           }
-          a{
-            color:#CEE9EC;
-            text-decoration-line: none;
-            font-size: 2em;
+          button {
+            margin-top: 50px;
+            color: white;
+            background-color: #8756ca;
+            border: none;
+            padding: 10px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
           }
-         `}</style>
+        `}</style>
       </Layout>
     )
   }
