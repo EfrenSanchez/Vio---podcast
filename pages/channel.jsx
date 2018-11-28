@@ -1,69 +1,113 @@
-'use strict'
-
 import 'isomorphic-fetch'
-
 import Layout from '../components/Layout'
 import ChannelGrid from '../components/ChannelGrid'
 import PodcastList from '../components/PodcastList'
+import PodcastPlayer from '../components/PodcastPlayer'
+import Error from './_error'
 
 export default class extends React.Component {
-  static async getInitialProps ({ query }) {
-    const idChannel = query.id
 
-    const [ reqChannel, reqAudio, reqSeries ] = await Promise.all(
-      [
+  constructor(props) {
+    super(props)
+    this.state = { openPodcast: null }
+  }
+
+  static async getInitialProps({ query, res }) {
+    let idChannel = query.id
+
+    try {
+      let [reqChannel, reqSeries, reqAudios] = await Promise.all([
         fetch(`https://api.audioboom.com/channels/${idChannel}`),
-        fetch(`https://api.audioboom.com/channels/${idChannel}/audio_clips`),
-        fetch(`https://api.audioboom.com/channels/${idChannel}/child_channels`)
-      ]
-    )
+        fetch(`https://api.audioboom.com/channels/${idChannel}/child_channels`),
+        fetch(`https://api.audioboom.com/channels/${idChannel}/audio_clips`)
+      ])
 
-    const { body: { channel } } = await reqChannel.json()
-    const { body: { audio_clips } } = await reqAudio.json()
-    const { body: { channels } } = await reqSeries.json()
+      if( reqChannel.status >= 400 ) {
+        res.statusCode = reqChannel.status
+        return { channel: null, audioClips: null, channels: null, statusCode: reqChannel.status }
+      }
 
-    return {
-      channel,
-      audio_clips,
-      channels
+      let dataChannel = await reqChannel.json()
+      let channel = dataChannel.body.channel
+
+      let dataAudios = await reqAudios.json()
+      let audioClips = dataAudios.body.audio_clips
+
+      let dataSeries = await reqSeries.json()
+      let channels = dataSeries.body.channels
+
+      return { channel, audioClips, channels, statusCode: 200 }
+    } catch(e) {
+      return { channel: null, audioClips: null, channels: null, statusCode: 503 }
     }
   }
 
-  render () {
-    const { channel, audio_clips, channels } = this.props
+  openPodcast = (event, podcast) => {
+    if ( event.metaKey || event.ctrlKey || event.shiftKey || (event.nativeEvent && event.nativeEvent.which === 2) ) {
+      // Si está haciendo Ctrl+Click o Cmd+Click, dejamos que el click suceda normalmente
+      return
+    }
 
-    return (
-      <Layout title={ channel.title }>
+    event.preventDefault()
+    this.setState({
+      openPodcast: podcast
+    })
+  }
 
-        <h1>{ channel.title }</h1>
+  closePodcast = (event) => {
+    event.preventDefault()
+    this.setState({
+      openPodcast: null
+    })
+  }
 
-        <h2>Últimos Podcasts</h2>
-        <PodcastList audio_clips={ audio_clips } />
+  render() {
+    const { channel, audioClips, channels, statusCode } = this.props
+    const { openPodcast } = this.state
 
-        <h2>Series</h2>
-        <ChannelGrid channels={ channels } />
+    if( statusCode !== 200 ) {
+      return <Error statusCode={ statusCode } />
+    }
 
-        <style jsx>
-          {`
-            h1 {
-              font-weight: 600;
-              padding: 0 15px;
-              margin: 15px 0;
-            }
+    return <Layout title={channel.title}>
 
-            h2 {
-              padding: 5px;
-              font-size: 0.9em;
-              font-weight: 600;
-              margin: 0;
-            }
+      { openPodcast &&
+        <PodcastPlayer clip={ openPodcast } onClose={ this.closePodcast } />
+      }
 
-            h1, h2 {
-              text-align: center;
-            }
-          `}
-        </style>
-      </Layout>
-    )
+      <div className="banner" style={{ backgroundImage: `url(${channel.urls.banner_image.original})` }} />
+
+      <h1>{ channel.title }</h1>
+
+      { channels.length > 0 &&
+        <div>
+          <h2>Series</h2>
+          <ChannelGrid channels={ channels } />
+        </div>
+      }
+
+      <h2>Ultimos Podcasts</h2>
+      <PodcastList podcasts={ audioClips } onClickPodcast={ this.openPodcast } />
+
+      <style jsx>{`
+        .banner {
+          width: 100%;
+          padding-bottom: 25%;
+          background-position: 50% 50%;
+          background-size: cover;
+          background-color: #aaa;
+        }
+        h1 {
+          font-weight: 600;
+          padding: 15px;
+        }
+        h2 {
+          padding: 15px;
+          font-size: 1.2em;
+          font-weight: 600;
+          margin: 0;
+        }
+      `}</style>
+    </Layout>
   }
 }

@@ -1,7 +1,7 @@
 'use strict'
-
 import 'isomorphic-fetch'
-import Link from 'next/link'
+import {Link} from '../routes'
+import slug from '../helper/slug'
 
 export default class ChannelGrid extends React.Component {
   render () {
@@ -14,7 +14,8 @@ export default class ChannelGrid extends React.Component {
           channels.map(channel => (
             <Link
               key={ channel.id }
-              href={`/channel?id=${ channel.id }`}
+              route="channel"
+              params={{ slug: slug(channel.title), id: channel.id }}
               prefetch
             >
               <a className="channel">
