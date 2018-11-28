@@ -14,7 +14,7 @@ export default class PodcastList extends React.Component {
           onClick={ (event) => onClickPodcast(event, podcast) }>
 
           <h3>{ podcast.title }</h3>
-          
+
           <div className='meta'>
             { Math.ceil(podcast.duration / 60) } minutes
           </div>

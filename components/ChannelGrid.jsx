@@ -1,4 +1,3 @@
-'use strict'
 import 'isomorphic-fetch'
 import {Link} from '../routes'
 import slug from '../helper/slug'

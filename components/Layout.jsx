@@ -1,5 +1,3 @@
-'use strict'
-
 import Head from 'next/head'
 import Link from 'next/link'
 import Nprogress from 'nprogress'

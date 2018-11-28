@@ -1,4 +1,3 @@
-'use strict'
 import 'isomorphic-fetch'
 import Layout from '../components/Layout'
 import ChannelGrid from '../components/ChannelGrid'
