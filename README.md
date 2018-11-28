@@ -1,4 +1,5 @@
 # Vio---podcast
+
 Podcasts app
 
 
@@ -8,10 +9,9 @@ Podcasts app
 
 
 
-
 ## Requirements
 - Node.JS
-- Next JS
+- NextJS
 - NPM or Yarn
 - Basic knowledge in ES6 (JavaScript)
 - API documentation from https://api.audioboom.com
@@ -19,6 +19,7 @@ Podcasts app
 
 
 ![Screenshot](./static/.readme/capture_home.png) ![Screenshot](./static/.readme/capture_channel.png)
+
 
 
 # Get started
@@ -58,6 +59,7 @@ When you done these steps, your default browser should open and redirect you to 
 ## Building for production
 
 Example using npm
+
 
 `npm run build && npm start`
 
