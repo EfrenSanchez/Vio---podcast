@@ -1,12 +1,25 @@
 # Vio---podcast
-Podcasts
+
+Podcasts app
+
+
+![Screenshot](./static/.readme/capture_ipad.png)
+
+![Screenshot](./static/.readme/capture_player.png)
+
+[check it out](https://next-ipi4tqwno.now.sh)
 
 
 ## Requirements
-- Next JS
+- Node.JS
+- NextJS
 - NPM or Yarn
 - Basic knowledge in ES6 (JavaScript)
 - API documentation from https://api.audioboom.com
+
+
+![Screenshot](./static/.readme/capture_home.png) ![Screenshot](./static/.readme/capture_channel.png)
+
 
 
 # Get started
@@ -47,8 +60,14 @@ When you done these steps, your default browser should open and redirect you to 
 
 Example using npm
 
-`npm run build`
+
+`npm run build && npm start`
 
 Example using yarn
 
-`yarn build`
+`yarn build && start`
+
+
+## License
+
+MIT

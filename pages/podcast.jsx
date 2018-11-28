@@ -1,7 +1,6 @@
 'use strict'
 
 import 'isomorphic-fetch'
-import Link from 'next/link'
 
 import Layout from '../components/Layout'
 import Modal from '../components/Modal'
