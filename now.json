@@ -1,8 +1,8 @@
 {
   "name": "vio",
-  "version": 2,
+  "alias":"vio-podcast.now.sh",
   "env": {
-    "NODE_ENV": "production",
-    "PORT": "3000"
-  }
+    "NODE_ENV": "production"
+  },
+  "type":"npm"
 }
