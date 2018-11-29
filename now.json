@@ -1,4 +1,8 @@
 {
   "name": "vio",
-  "version": 2
+  "version": 2,
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  }
 }
