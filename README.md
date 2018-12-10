@@ -15,7 +15,6 @@ Podcasts app
 - NPM or Yarn
 - Basic knowledge in ES6 (JavaScript)
 - API documentation from https://api.audioboom.com
-- >>>[check it out](https://next-ipi4tqwno.now.sh)<<<
 
 
 ![Screenshot](./static/.readme/capture_home.png) ![Screenshot](./static/.readme/capture_channel.png)
